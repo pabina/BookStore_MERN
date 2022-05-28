@@ -11,8 +11,8 @@ export default new Sequelize(
   {
     host: process.env.DB_HOST,
     dialect: "mysql",
-    pool: {
-      max: 5,
-    },
+    // pool: {
+    //   max: 5,
+    // },
   }
 );

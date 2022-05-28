@@ -20,5 +20,5 @@ myserver.listen(process.env.PORT || 8000, async () => {
   } catch (err) {
     console.log("error during connection to database");
   }
-  connection.sync({ force: true });
+  connection.sync();
 });
