@@ -1,48 +1,21 @@
 import express from "express";
 import bookModel from "../models/bookModel.js";
+
+import BookController from "../controller/bookController.js";
+const Controller = new BookController();
 const bookRoute = express.Router();
 
 //book home page
-bookRoute.get("/", async (req, res) => {
-  res.status(200).json({ success: true, message: "you are inside book" });
-});
+bookRoute.get("/", Controller.bookHome);
 
 //adding book
-bookRoute.post("/add", async (req, res) => {
-  const { name, author, genre, description, image } = req.body;
-  const data = await bookModel.create({
-    name,
-    author,
-    genre,
-    description,
-    image,
-  });
-  res.send(data);
-});
+bookRoute.post("/add", Controller.bookAdd);
 
 //view book details according to id
-bookRoute.get("/:id", async (req, res) => {
-  const { id } = req.params;
-  const data = await bookModel.findByPk(`${id}`);
-  res.send(data);
-});
+bookRoute.get("/:id", Controller.bookView);
 
 //update book
-bookRoute.post("/update/:id", async (req, res) => {
-  const { name, author, genre, description, image } = req.body;
-  const { id } = req.params;
-  const data = await bookModel.update(
-    { name, author, genre, description, image },
-    {
-      where: { id },
-    }
-  );
-  res.send(data);
-});
+bookRoute.post("/update/:id", Controller.bookUpdate);
 //delete book
-bookRoute.delete("/delete/:id", async (req, res) => {
-  const { id } = req.params;
-  const data = await bookModel.destroy({ where: { id } });
-  res.json(data);
-});
+bookRoute.delete("/delete/:id", Controller.bookDelete);
 export default bookRoute;
