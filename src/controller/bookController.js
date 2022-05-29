@@ -1,3 +1,4 @@
+import { Op } from "sequelize";
 import bookModel from "../models/bookModel.js";
 class BookController {
   //for bookhome
@@ -33,6 +34,24 @@ class BookController {
     const { id } = req.params;
     const data = await bookModel.destroy({ where: { id } });
     res.json(data);
+  }
+
+  //for book search
+  async bookSearch(req, res) {
+    let { q } = req.query;
+    if (q) {
+      const data = await bookModel.findAll({
+        where: {
+          [Op.or]: {
+            name: {
+              [Op.like]: `%${q}%`,
+            },
+            author: { [Op.like]: `%${q}%` },
+          },
+        },
+      });
+      res.json(data);
+    } else res.send("dont match any value");
   }
 }
 export default BookController;

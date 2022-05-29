@@ -38,4 +38,7 @@ bookRoute.post("/update/:id", upload.single("image"), (req, res) => {
 });
 //delete book
 bookRoute.delete("/delete/:id", Controller.bookDelete);
+
+//for serach all according to author and bookname
+bookRoute.get("/search/all", Controller.bookSearch);
 export default bookRoute;
