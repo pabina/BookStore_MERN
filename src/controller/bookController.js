@@ -6,15 +6,8 @@ class BookController {
   }
 
   //for book add
-  async bookAdd(req, res) {
-    const { name, author, genre, description, image } = req.body;
-    const data = await bookModel.create({
-      name,
-      author,
-      genre,
-      description,
-      image,
-    });
+  async bookAdd(req, res, imageName) {
+    const data = await bookModel.create({ ...req.body, image: imageName });
     res.send(data);
   }
   //for book view by id
@@ -24,11 +17,10 @@ class BookController {
     res.send(data);
   }
   //for book update
-  async bookUpdate(req, res) {
-    const { name, author, genre, description, image } = req.body;
+  async bookUpdate(req, res, imageName) {
     const { id } = req.params;
     const data = await bookModel.update(
-      { name, author, genre, description, image },
+      { ...req.body, image: imageName },
       {
         where: { id },
       }
