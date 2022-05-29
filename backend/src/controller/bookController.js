@@ -3,7 +3,10 @@ import bookModel from "../models/bookModel.js";
 class BookController {
   //for bookhome
   async bookHome(req, res) {
-    res.status(200).json({ success: true, message: "you are inside book" });
+    let { limit } = req.query;
+    if (!limit) limit = 5;
+    const data = await bookModel.findAll({});
+    res.send(data);
   }
 
   //for book add
